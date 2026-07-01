@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import testRouter from "./routes/testRouter.js";
 import connectDB from "./config/db.js";
 import validateENVs from "./config/env.js";
+import authRoutes from "./routes/authRoutes.js";
 
 dotenv.config(); // dotenv configuration
 
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 app.use(testRouter);
+app.use(authRoutes);
 
 // app.use( (req, res) => {
     //     console.log("--------------------");
