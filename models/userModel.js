@@ -1,0 +1,13 @@
+import mongoose from "mongoose";
+
+const userSchema = mongoose.Schema({
+    userName: {type: String, required: [true, 'user name is required']},
+    email: {type: String, required: [true, 'email is required'], unique: true},
+    password: {type: String, required: [true, 'password is required']},
+    address: {type: Array},
+    phone: {type: String, required: [true, 'phone number is required']},
+    userType: {type: String, required: [true, 'user type is required'], default: 'client', enums: ['client', 'admin', 'vendor', 'driver']},
+    profile: {type: String, defaulr: 'https://cdn-icons-png.flaticon.com/512/9187/9187604.png'},  
+}, {timestamp: true} );
+
+export default mongoose.model('User', userSchema)
