@@ -95,3 +95,48 @@ export const resetPassword = async (req, res, next) => {
         })
     }
 }
+
+export const updatePassword = async (req, res, next) => {
+    try {
+        const userId = req.body.id;
+        const user = await User.findOne({_id: userId});
+        if(!user) {
+            res.status(404).json({
+                success: false,
+                message: "user not found"
+            })
+        }
+        
+        const { oldPassword, newPassword } = req.body;
+        if(!oldPassword || !newPassword) {
+            res.status(500).json({
+                success: false,
+                message: "please provide all fields"
+            })
+        }
+
+        const isMatch = await bcrypt.compare(oldPassword, user.password);
+        if(!isMatch) {
+            return res.status(401).json({
+                success: false,
+                message: 'invalid old password',
+            })    
+        }
+        
+        const hashedPassword = await bcrypt.hash(newPassword, 12);
+        user.password = hashedPassword;
+        await user.save();
+        return res.status(200).json({
+            success: true,
+            message: 'passwords updated successfully',
+        })    
+        
+    } catch (error) {
+        console.log('error in updatePassord:',error);
+        res.status(500).json({
+            success: false,
+            message: "error in password update API"
+        })
+
+    }
+}
