@@ -3,8 +3,8 @@ import bcrypt from "bcryptjs";
 import JWT from "jsonwebtoken";
 
 export const registerController = async (req, res, next) => {
-    const { userName, email, password, address, phone, userType, profile } = req.body;
-    if(!userName || !email || !password || !phone) {
+    const { userName, email, password, address, phone, userType, profile, answer } = req.body;
+    if(!userName || !email || !password || !phone || !answer) {
         res.status(400).json({
             success: false,
             message: 'Please provide all fields',
@@ -23,7 +23,7 @@ export const registerController = async (req, res, next) => {
     // create new user
     // 1st hash the password -:
     const hashedPassword = await bcrypt.hash(password, 12);
-    const user = new User({ userName, email, password: hashedPassword, address, phone, userType, profile });
+    const user = new User({ userName, email, password: hashedPassword, address, phone, userType, profile, answer });
     
     user.save()
     .then( () => {
