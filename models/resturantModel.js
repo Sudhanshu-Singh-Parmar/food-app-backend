@@ -12,7 +12,7 @@ const resturantSchema = mongoose.Schema({
     rating: {type: Number, default: 1, min: 1, max: 5},
     ratingCount: {type: String},
     code: {type: String},
-    cords: {
+    coords: {
         id: String,
         latitude: Number,
         latitudeDelta: Number,
