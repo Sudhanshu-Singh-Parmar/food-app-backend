@@ -89,4 +89,9 @@ export const loginController = async (req, res, next) => {
     }
 }
 
-
+export const logoutController = (req, res) => {
+    return res.status(200).json({
+        success: true,
+        message: "Logged out successfully"
+    });
+};
