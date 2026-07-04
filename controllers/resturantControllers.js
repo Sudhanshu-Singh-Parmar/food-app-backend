@@ -66,3 +66,20 @@ export const getResturantById = async (req,res, next) => {
         })
     }
 }
+
+export const deleteResturant = async (req,res, next) => {
+    try {
+        const resturantId = req.params.id;
+        await Resturant.findByIdAndDelete(resturantId);
+        res.status(200).json({
+            success: true,
+            message: "resturant deleted successfully"
+        })
+    } catch (error) {
+        console.log('error in delete resturant API:', error)
+        return res.status(500).json({
+            success: false,
+            message: "error in delete resturant API"
+        })
+    }
+}
