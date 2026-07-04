@@ -1,5 +1,5 @@
 import express from 'express';
-import { getUser, resetPassword, updatePassword, updateUser } from '../controllers/userController.js';
+import { deleteUser, getUser, resetPassword, updatePassword, updateUser } from '../controllers/userController.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
 
 
@@ -9,5 +9,6 @@ userRoutes.get('/getUser', authMiddleware, getUser);
 userRoutes.post('/updateUser', authMiddleware, updateUser);
 userRoutes.post('/resetPassword', authMiddleware, resetPassword);
 userRoutes.post('/updatePassword', authMiddleware, updatePassword);
+userRoutes.delete('/deleteUser', authMiddleware, deleteUser);
 
 export default userRoutes;
