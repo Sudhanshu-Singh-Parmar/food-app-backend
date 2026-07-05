@@ -75,3 +75,27 @@ export const updateCategory = async(req, res, next) => {
         })
     }    
 }
+
+export const deleteCategory = async(req, res, next) => {
+    try {
+        const id = req.params.id;
+        const deletedCategory = await Category.findByIdAndDelete(id);
+        if(!deletedCategory) {
+            return res.status(404).json({
+                success: false,
+                message: 'category not found'
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            message: 'category deleted successfully'
+        })
+    } catch (error) {
+        console.log('error in delete category API:',error);
+        res.status(500).json({
+            success: false,
+            message: 'error in delete category API'
+        })
+    }
+    
+}
