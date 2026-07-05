@@ -26,3 +26,21 @@ export const createCategory = async (req, res, next) => {
         })
     }
 }
+
+export const getAllCategories = async (req, res, next) => {
+    try {
+        const categories = Category.find();
+        return res.status(200).json({
+            success: true,
+            message: 'all category fetched successfully',
+            categories
+        })
+        
+    } catch (error) {
+        console.log('error in get all category API:',error);
+        res.status(500).json({
+            success: false,
+            message: 'error in get all category API'
+        })
+    }
+}
