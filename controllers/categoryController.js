@@ -44,3 +44,34 @@ export const getAllCategories = async (req, res, next) => {
         })
     }
 }
+
+export const updateCategory = async(req, res, next) => {
+    try {
+        const id = req.params.id;
+        const { title, imageUrl } = req.body;
+        if(!title) {
+            return res.status(404).json({
+                success: false,
+                message: 'title id required'
+            })
+        }
+        const updatedCategory = await Category.findByIdAndUpdate(id, {title, imageUrl}, {new: true, runValidators: true} );
+        if(!updatedCategory) {
+            return res.status(404).json({
+                success: false,
+                message: 'category not found'
+            })
+        }    
+        return res.status(200).json({
+            success: true,
+            message: 'category updated successfully',
+            updatedCategory
+        })
+    } catch (error) {
+        console.log('error in update category API:',error);
+        res.status(500).json({
+            success: false,
+            message: 'error in update category API'
+        })
+    }    
+}
