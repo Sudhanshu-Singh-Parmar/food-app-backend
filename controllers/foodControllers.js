@@ -91,3 +91,31 @@ export const getFoodByResturant = async (req, res, next) => {
         })
     }
 }
+
+export const updateFood = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const { title, description, price, imageUrl, foodTags, category, code, isAvailable, resturant, rating, ratingCount } = req.body;
+
+        const updatedFood = await Food.findByIdAndUpdate(id, { title, description, price, imageUrl, foodTags, category, code, isAvailable, resturant, rating, ratingCount }, {new: true, runValidators: true});
+        
+        if(!updatedFood) {
+            return res.status(404).json({
+                success: false,
+                message: 'food not found'
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            message: 'food updated successfully',
+            updatedFood
+        })
+        
+    } catch (error) {
+        console.log('error in update food API:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'error in update food API'
+        })
+    }
+}
