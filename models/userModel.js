@@ -9,7 +9,7 @@ const userSchema = mongoose.Schema({
     userType: {type: String, required: [true, 'user type is required'], default: 'client', enums: ['client', 'admin', 'vendor', 'driver']},
     profile: {type: String, default: 'https://cdn-icons-png.flaticon.com/512/9187/9187604.png'},
     answer: {type: String, required: [true, 'Answer is required']}
-}, {timestamp: true} );
+}, {timestamps: true} );
 
 const User = mongoose.model('User', userSchema);
 export default User;

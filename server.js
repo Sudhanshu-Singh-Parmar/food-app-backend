@@ -9,6 +9,7 @@ import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import resturantRoutes from "./routes/resturantRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
+import foodRoutes from "./routes/foodRoutes.js";
 
 dotenv.config(); // dotenv configuration
 
@@ -30,6 +31,7 @@ app.use(authRoutes);
 app.use(userRoutes);
 app.use(resturantRoutes);
 app.use(categoryRoutes);
+app.use(foodRoutes);
 
 // app.use( (req, res) => {
     //     console.log("--------------------");

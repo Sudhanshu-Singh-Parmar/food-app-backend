@@ -21,7 +21,7 @@ const resturantSchema = mongoose.Schema({
         address: String,
         title: String
     },
-}, {timestamp: true} );
+}, {timestamps: true} );
 
 const Resturant = mongoose.model('Resturant', resturantSchema);
 export default Resturant;

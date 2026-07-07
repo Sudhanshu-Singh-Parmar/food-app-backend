@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import resturantRoutes from "../routes/resturantRoutes";
 
 const foodSchema = mongoose.Schema({
     title: {type: String, required: [true, 'Food title is required']},
@@ -8,13 +7,13 @@ const foodSchema = mongoose.Schema({
     imageUrl: {type: String, default: 'https://cdn-icons-png.flaticon.com/512/9187/9187604.png'},
     foodTags: {type: String},
     category: {type: String},
-    cdoe: {type: String},
+    code: {type: String},
     isAvailable: {type: Boolean, default: true},
-    resturant: { trype: mongoose.Schema.Types.ObjectId, ref: "Resturant" },
-    rating: {type: Number, min = 1, max = 5},
+    resturant: { type: mongoose.Schema.Types.ObjectId, ref: "Resturant" },
+    rating: {type: Number, min: 1, max: 5},
     ratingCount: {type: String},
     
-}, {timestamp: true} );
+}, {timestamps: true} );
 
-const Foods = mongoose.model('Foods', foodSchema);
-export default Foods;
+const Food = mongoose.model('Food', foodSchema);
+export default Food;
