@@ -119,3 +119,30 @@ export const updateFood = async (req, res, next) => {
         })
     }
 }
+
+export const deleteFood = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+
+        const deletedFood = await Food.findByIdAndDelete(id);
+        
+        if(!deletedFood) {
+            return res.status(404).json({
+                success: false,
+                message: 'food not found'
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            message: 'food deleted successfully',
+            deletedFood
+        })
+        
+    } catch (error) {
+        console.log('error in delete food API:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'error in delete food API'
+        })
+    }
+}
