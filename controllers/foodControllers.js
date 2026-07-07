@@ -23,3 +23,21 @@ export const createFood = async (req, res, next) => {
         })
     }
 }
+
+export const getAllFoods = async (req, res, next) => {
+    try {
+        const allFoods = await Food.find();
+        return res.status(200).json({
+            success: true,
+            message: 'all foods fetched successfully',
+            allFoods
+        })
+        
+    } catch (error) {
+        console.log('error in get all foods API:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'error in get all foods API'
+        })
+    }
+}
