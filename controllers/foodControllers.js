@@ -1,4 +1,5 @@
 import Food from "../models/foodModel.js";
+import Order from "../models/orderModel.js";
 
 export const createFood = async (req, res, next) => {
     try {
@@ -139,10 +140,35 @@ export const deleteFood = async (req, res, next) => {
         })
         
     } catch (error) {
-        console.log('error in delete food API:', error);
+    }
+}
+
+export const placeOrder = async (req, res, next) => {
+    try {
+        const userId = req.body.id;
+        const {cart, payment} = req.body;
+        if (!cart || cart.length === 0) {
+           return res.status(400).json({            
+                success: false,
+                message: "Cart is empty"
+          });
+        }
+        
+        const total = cart.reduce((sum, item) => sum + Number(item.price), 0);
+        const foodIds = cart.map(item => item._id);
+        
+        const newOrder = new Order({food:foodIds, payment: total, buyer: userId});
+        await newOrder.save();
+        return res.status(200).json({
+            success: true,
+            message: 'order placed successfully',
+            newOrder
+        })
+    } catch (error) {
+        console.log('error in place order API:', error);
         return res.status(500).json({
             success: false,
-            message: 'error in delete food API'
+            message: 'error in place order API'
         })
     }
 }
