@@ -148,10 +148,10 @@ export const placeOrder = async (req, res, next) => {
         const userId = req.body.id;
         const {cart, payment} = req.body;
         if (!cart || cart.length === 0) {
-           return res.status(400).json({            
+            return res.status(400).json({            
                 success: false,
                 message: "Cart is empty"
-          });
+            });
         }
         
         const total = cart.reduce((sum, item) => sum + Number(item.price), 0);
@@ -169,6 +169,39 @@ export const placeOrder = async (req, res, next) => {
         return res.status(500).json({
             success: false,
             message: 'error in place order API'
+        })
+    }
+}
+
+export const updateOrderStatus = async (req, res, next) => {
+    try {
+        const orderId = req.params.id;
+        const { status } = req.body;
+        if(!status) {
+            return res.status(404).json({
+                success: false,
+                message: 'invalid status'
+            })
+        }
+
+        const orderUpdate = await Order.findByIdAndUpdate(orderId, {status}, {new: true, runValidators: true});
+        
+        if(!orderUpdate) {
+            return res.status(404).json({
+                success: false,
+                message: 'order not found'
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            message: 'order status updated successfully',
+            orderUpdate
+        })
+    } catch (error) {
+        console.log('error in update order status API:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'error in update order status API'
         })
     }
 }
